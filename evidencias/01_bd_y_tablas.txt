@@ -1,0 +1,47 @@
++------------------------+
+| Database               |
++------------------------+
+| datacommerce_analytics |
+| getherware_db          |
+| information_schema     |
+| mysql                  |
+| performance_schema     |
+| sakila                 |
+| spring_mvc             |
+| sys                    |
+| world                  |
++------------------------+
++----------------------------------+
+| Tables_in_datacommerce_analytics |
++----------------------------------+
+| categorias                       |
+| ciudades                         |
+| clientes                         |
+| detalle_ventas                   |
+| productos                        |
+| vendedores                       |
+| ventas                           |
++----------------------------------+
++----------------+------------------------+--------------------+-----------------------+------------------------+
+| TABLE_NAME     | CONSTRAINT_NAME        | COLUMN_NAME        | REFERENCED_TABLE_NAME | REFERENCED_COLUMN_NAME |
++----------------+------------------------+--------------------+-----------------------+------------------------+
+| clientes       | fk_clientes_ciudad     | id_ciudad          | ciudades              | id_ciudad              |
+| detalle_ventas | fk_detalle_producto    | id_producto        | productos             | id_producto            |
+| detalle_ventas | fk_detalle_venta       | id_venta           | ventas                | id_venta               |
+| productos      | fk_productos_categoria | id_categoria       | categorias            | id_categoria           |
+| vendedores     | fk_vendedores_ciudad   | id_ciudad_asignada | ciudades              | id_ciudad              |
+| ventas         | fk_ventas_ciudad       | id_ciudad          | ciudades              | id_ciudad              |
+| ventas         | fk_ventas_cliente      | id_cliente         | clientes              | id_cliente             |
+| ventas         | fk_ventas_vendedor     | id_vendedor        | vendedores            | id_vendedor            |
++----------------+------------------------+--------------------+-----------------------+------------------------+
++----------------+---------------+
+| tabla          | filas_exactas |
++----------------+---------------+
+| ciudades       |             8 |
+| clientes       |            30 |
+| vendedores     |            10 |
+| categorias     |             5 |
+| productos      |            30 |
+| ventas         |           180 |
+| detalle_ventas |           395 |
++----------------+---------------+

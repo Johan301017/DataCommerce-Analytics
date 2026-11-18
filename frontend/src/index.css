@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { -webkit-font-smoothing: antialiased; }
+  body { @apply bg-surface text-ink; }
+}
+
+@layer components {
+  .card { @apply rounded-xl border border-slate-200 bg-white shadow-sm; }
+  .card-header { @apply flex items-center justify-between gap-2 border-b border-slate-100 px-5 py-3; }
+  .card-title { @apply text-sm font-semibold text-ink; }
+  .card-subtitle { @apply text-xs text-muted; }
+  .table-base { @apply w-full text-left text-sm; }
+  .table-base thead th { @apply sticky top-0 bg-slate-50 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted; }
+  .table-base tbody td { @apply border-t border-slate-100 px-3 py-2 align-middle; }
+  .table-base tbody tr:hover { @apply bg-slate-50; }
+  .input { @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-ink shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30; }
+  .badge { @apply inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium; }
+}
+
+.leaflet-container { font-family: inherit; }

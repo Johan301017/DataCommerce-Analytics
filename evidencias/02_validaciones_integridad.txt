@@ -1,0 +1,102 @@
++----------------+-----------+
+| tabla          | registros |
++----------------+-----------+
+| ciudades       |         8 |
+| clientes       |        30 |
+| vendedores     |        10 |
+| categorias     |         5 |
+| productos      |        30 |
+| ventas         |       180 |
+| detalle_ventas |       395 |
++----------------+-----------+
++-------------------+-------+-----------+
+| validacion        | valor | resultado |
++-------------------+-------+-----------+
+| V2 tablas creadas |     7 | OK        |
++-------------------+-------+-----------+
++----------------+------------------------+--------------------+--------------------+----------------------+
+| tabla          | restriccion            | columna            | tabla_referenciada | columna_referenciada |
++----------------+------------------------+--------------------+--------------------+----------------------+
+| clientes       | fk_clientes_ciudad     | id_ciudad          | ciudades           | id_ciudad            |
+| detalle_ventas | fk_detalle_producto    | id_producto        | productos          | id_producto          |
+| detalle_ventas | fk_detalle_venta       | id_venta           | ventas             | id_venta             |
+| productos      | fk_productos_categoria | id_categoria       | categorias         | id_categoria         |
+| vendedores     | fk_vendedores_ciudad   | id_ciudad_asignada | ciudades           | id_ciudad            |
+| ventas         | fk_ventas_ciudad       | id_ciudad          | ciudades           | id_ciudad            |
+| ventas         | fk_ventas_cliente      | id_cliente         | clientes           | id_cliente           |
+| ventas         | fk_ventas_vendedor     | id_vendedor        | vendedores         | id_vendedor          |
++----------------+------------------------+--------------------+--------------------+----------------------+
++--------------+-------+-----------+
+| validacion   | valor | resultado |
++--------------+-------+-----------+
+| V3 huerfanos |     0 | OK        |
++--------------+-------+-----------+
++-----------------------+-------+-----------+
+| validacion            | valor | resultado |
++-----------------------+-------+-----------+
+| V4 ventas sin detalle |     0 | OK        |
++-----------------------+-------+-----------+
++------------------------+-------+-----------+
+| validacion             | valor | resultado |
++------------------------+-------+-----------+
+| V5 facturas duplicadas |     0 | OK        |
++------------------------+-------+-----------+
++--------------------+-------------------------+-----------+
+| validacion         | valor                   | resultado |
++--------------------+-------------------------+-----------+
+| V6 rango de fechas | 2025-01-01 a 2026-10-31 | OK        |
++--------------------+-------------------------+-----------+
++------------------------+-------+-----------+
+| validacion             | valor | resultado |
++------------------------+-------+-----------+
+| V7 coherencia temporal |     0 | OK        |
++------------------------+-------+-----------+
++---------------------+-------+-----------+
+| validacion          | valor | resultado |
++---------------------+-------+-----------+
+| V8 detalle invalido |     0 | OK        |
++---------------------+-------+-----------+
++---------------------+---------------+---------------+-----------+
+| validacion          | total_general | suma_ciudades | resultado |
++---------------------+---------------+---------------+-----------+
+| V9 ciudades = total |  351210800.00 |  351210800.00 | OK        |
++---------------------+---------------+---------------+-----------+
++------------------------+---------------+-----------------+-----------+
+| validacion             | total_general | suma_categorias | resultado |
++------------------------+---------------+-----------------+-----------+
+| V10 categorias = total |  351210800.00 |    351210800.00 | OK        |
++------------------------+---------------+-----------------+-----------+
++--------------------------+----------------------+-----------+
+| validacion               | suma_participaciones | resultado |
++--------------------------+----------------------+-----------+
+| V11 participacion = 100% |               100.00 | OK        |
++--------------------------+----------------------+-----------+
++----------------------------------+----------------+--------------+--------------+-----------+
+| validacion                       | ingresos_netos | costos       | utilidad     | resultado |
++----------------------------------+----------------+--------------+--------------+-----------+
+| V12 utilidad = ingresos - costos |   351210800.00 | 248711600.00 | 102499200.00 | OK        |
++----------------------------------+----------------+--------------+--------------+-----------+
++----------------------------------+-------------------------+-----------+
+| validacion                       | clientes_con_diferencia | resultado |
++----------------------------------+-------------------------+-----------+
+| V13 compras = facturas distintas |                       0 | OK        |
++----------------------------------+-------------------------+-----------+
++-------------------------------------------+-----------------+-----------------+--------------------+--------------+-----------+
+| validacion                                | total_consulta1 | total_consulta9 | transacciones_join | filas_ventas | resultado |
++-------------------------------------------+-----------------+-----------------+--------------------+--------------+-----------+
+| V14 consulta1 = consulta9 y transacciones |    351210800.00 |    351210800.00 |                180 |          180 | OK        |
++-------------------------------------------+-----------------+-----------------+--------------------+--------------+-----------+
++--------------------------------------+----------------+
+| prueba                               | resultado      |
++--------------------------------------+----------------+
+| PRIMARY KEY duplicada en ciudades    | OK (rechazado) |
+| UNIQUE nombre de ciudad repetido     | OK (rechazado) |
+| UNIQUE codigo_sku repetido           | OK (rechazado) |
+| UNIQUE numero_factura repetido       | OK (rechazado) |
+| NOT NULL nombre de cliente           | OK (rechazado) |
+| FOREIGN KEY cliente inexistente      | OK (rechazado) |
+| CHECK cantidad > 0                   | OK (rechazado) |
+| CHECK precio_lista > 0               | OK (rechazado) |
+| ON DELETE RESTRICT ciudad con ventas | OK (rechazado) |
+| ON DELETE RESTRICT venta con detalle | OK (rechazado) |
++--------------------------------------+----------------+

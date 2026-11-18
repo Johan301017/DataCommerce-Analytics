@@ -1,0 +1,133 @@
++--------------+--------------------+------------+------------------+
+| ciudad       | departamento       | num_ventas | ingresos_totales |
++--------------+--------------------+------------+------------------+
+| Bogotá       | Cundinamarca       |         61 |     128655400.00 |
+| Medellín     | Antioquia          |         44 |      88451000.00 |
+| Cali         | Valle del Cauca    |         22 |      38370800.00 |
+| Pereira      | Risaralda          |         12 |      33002300.00 |
+| Cartagena    | Bolívar            |          8 |      21090000.00 |
+| Bucaramanga  | Santander          |         12 |      14727500.00 |
+| Barranquilla | Atlántico          |         14 |      14413000.00 |
+| Cúcuta       | Norte de Santander |          7 |      12500800.00 |
++--------------+--------------------+------------+------------------+
++----------+--------------------------+------------+--------------------+
+| posicion | vendedor                 | num_ventas | ingresos_generados |
++----------+--------------------------+------------+--------------------+
+|        1 | Juan Pablo Rodríguez     |         42 |        90517400.00 |
+|        2 | María Fernanda López     |         24 |        68445200.00 |
+|        3 | Carlos Andrés Martínez   |         35 |        54285900.00 |
++----------+--------------------------+------------+--------------------+
++----------------------+----------------+--------------+-------------+-------------------+---------------+------------------+
+| categoria            | ingresos_netos | costos       | utilidad    | margen_porcentual | rank_utilidad | rank_facturacion |
++----------------------+----------------+--------------+-------------+-------------------+---------------+------------------+
+| Hogar y Muebles      |    70215300.00 |  44472100.00 | 25743200.00 |             36.66 |             1 |                3 |
+| Deportes y Outdoor   |    77567400.00 |  52190200.00 | 25377200.00 |             32.72 |             2 |                2 |
+| Tecnología           |   133838500.00 | 110956900.00 | 22881600.00 |             17.10 |             3 |                1 |
+| Salud y Bienestar    |    32248100.00 |  16660800.00 | 15587300.00 |             48.34 |             4 |                5 |
+| Oficina y Papelería  |    37341500.00 |  24431600.00 | 12909900.00 |             34.57 |             5 |                4 |
++----------------------+----------------+--------------+-------------+-------------------+---------------+------------------+
++--------------------------+-----------------+-------------------+------------------+--------------------+
+| vendedor                 | ciudad_asignada | num_transacciones | ingresos_totales | promedio_por_venta |
++--------------------------+-----------------+-------------------+------------------+--------------------+
+| Diego Alejandro Morales  | Pereira         |                11 |      32549200.00 |         2959018.18 |
+| María Fernanda López     | Bogotá          |                24 |      68445200.00 |         2851883.33 |
+| Valentina Sofía Castro   | Cartagena       |                 8 |      21090000.00 |         2636250.00 |
+| Juan Pablo Rodríguez     | Medellín        |                42 |      90517400.00 |         2155176.19 |
+| Daniela Alejandra Ruiz   | Cúcuta          |                 7 |      12500800.00 |         1785828.57 |
+| Laura Valentina Torres   | Cali            |                22 |      38370800.00 |         1744127.27 |
+| Carlos Andrés Martínez   | Bogotá          |                35 |      54285900.00 |         1551025.71 |
+| Camila Andrea Vargas     | Medellín        |                 6 |       7951000.00 |         1325166.67 |
+| Santiago David Herrera   | Bucaramanga     |                12 |      14727500.00 |         1227291.67 |
+| Andrés Felipe Gómez      | Barranquilla    |                13 |      10773000.00 |          828692.31 |
++--------------------------+-----------------+-------------------+------------------+--------------------+
++---------+----------------------------------+----------------------+-------------------+---------------+-----------------------+
+| sku     | producto                         | categoria            | unidades_vendidas | ingreso_total | promedio_por_producto |
++---------+----------------------------------+----------------------+-------------------+---------------+-----------------------+
+| TEC-001 | Laptop Empresarial 15.6 pulgadas | Tecnología           |                23 |   70009600.00 |           11707026.67 |
+| DEP-001 | Bicicleta de Montaña Rin 29      | Deportes y Outdoor   |                19 |   43684800.00 |           11707026.67 |
+| TEC-002 | Monitor LED 27 pulgadas 4K       | Tecnología           |                13 |   22890000.00 |           11707026.67 |
+| OFI-001 | Impresora Multifuncional WiFi    | Oficina y Papelería  |                24 |   20063300.00 |           11707026.67 |
+| HOG-002 | Silla Ergonómica Premium         | Hogar y Muebles      |                12 |   19140200.00 |           11707026.67 |
+| HOG-006 | Aspiradora Robot Inteligente     | Hogar y Muebles      |                20 |   18448500.00 |           11707026.67 |
+| TEC-004 | Mouse Ergonómico Inalámbrico     | Tecnología           |                85 |   14822000.00 |           11707026.67 |
+| HOG-001 | Escritorio Ajustable Eléctrico   | Hogar y Muebles      |                 9 |   12251100.00 |           11707026.67 |
++---------+----------------------------------+----------------------+-------------------+---------------+-----------------------+
++-----------+------------+-----------------+------------------------------+
+| ciudad    | num_ventas | ingresos_ciudad | promedio_nacional_por_ciudad |
++-----------+------------+-----------------+------------------------------+
+| Bogotá    |         61 |    128655400.00 |                  43901350.00 |
+| Medellín  |         44 |     88451000.00 |                  43901350.00 |
++-----------+------------+-----------------+------------------------------+
++---------------------------+-------------------+-------------+--------------------+---------------+
+| cliente                   | ciudad_residencia | num_compras | ingresos_generados | ultima_compra |
++---------------------------+-------------------+-------------+--------------------+---------------+
+| Ana María Gutiérrez       | Bogotá            |          20 |        32881900.00 | 2026-09-22    |
+| Jorge Enrique Salazar     | Medellín          |          20 |        30408600.00 | 2026-10-12    |
+| Pedro José Ramírez        | Bogotá            |          16 |        38740000.00 | 2026-09-17    |
+| Hernán David Quintero     | Cali              |          13 |        19155900.00 | 2026-08-28    |
+| Natalia Andrea Duarte     | Medellín          |          11 |        25251700.00 | 2026-10-20    |
+| Esteban Camilo Lozano     | Barranquilla      |           9 |        12960900.00 | 2026-06-05    |
+| Christian Eduardo Peña    | Pereira           |           8 |        16990400.00 | 2026-10-03    |
+| Roberto Carlos Mejía      | Bogotá            |           8 |        12293500.00 | 2026-02-14    |
+| Felipe Antonio Díaz       | Bogotá            |           7 |        21106900.00 | 2026-09-20    |
+| Lucía del Carmen Peña     | Bogotá            |           7 |        15450300.00 | 2026-10-24    |
+| Óscar Mauricio Pardo      | Medellín          |           7 |         9933200.00 | 2026-09-23    |
+| Álvaro Javier Pineda      | Cali              |           6 |        14100400.00 | 2026-10-13    |
+| Claudia Milena Rojas      | Cúcuta            |           6 |         8604400.00 | 2026-08-21    |
+| Mauricio Alejandro Gil    | Cartagena         |           6 |         7633400.00 | 2026-10-08    |
+| Angélica María Suárez     | Bucaramanga       |           5 |         9208700.00 | 2026-09-25    |
+| Iván Darío Castaño        | Bucaramanga       |           5 |         6444700.00 | 2026-07-09    |
+| Luisa Fernanda Monroy     | Barranquilla      |           5 |         5588900.00 | 2026-10-31    |
+| Camila Fernanda Acosta    | Medellín          |           4 |         9012900.00 | 2025-06-26    |
+| Paola Alexandra Medina    | Medellín          |           3 |         9686900.00 | 2026-09-13    |
+| Mónica Liliana Cárdenas   | Cali              |           3 |         1636700.00 | 2026-10-04    |
+| Carolina Isabel Ríos      | Bogotá            |           2 |        10898200.00 | 2026-10-07    |
+| Julio César Bermúdez      | Cúcuta            |           2 |         4577900.00 | 2026-02-17    |
+| Diana Carolina Flórez     | Bucaramanga       |           2 |         1501300.00 | 2026-06-06    |
++---------------------------+-------------------+-------------+--------------------+---------------+
++------+------+---------+-------------------+-------------+
+| anio | mes  | periodo | num_transacciones | ingresos    |
++------+------+---------+-------------------+-------------+
+| 2025 |   12 | 2025-12 |                25 | 37918900.00 |
++------+------+---------+-------------------+-------------+
++----------------------+--------------------+--------------------------+
+| categoria            | ingresos_categoria | participacion_porcentual |
++----------------------+--------------------+--------------------------+
+| Tecnología           |       133838500.00 |                    38.11 |
+| Deportes y Outdoor   |        77567400.00 |                    22.09 |
+| Hogar y Muebles      |        70215300.00 |                    19.99 |
+| Oficina y Papelería  |        37341500.00 |                    10.63 |
+| Salud y Bienestar    |        32248100.00 |                     9.18 |
++----------------------+--------------------+--------------------------+
++------------+---------------------------+--------------+-------------+---------------------+-----------------+---------------+--------------------------+-----------------+---------------------+-------------------+
+| documento  | cliente                   | ciudad       | num_compras | ingresos_acumulados | ticket_promedio | ultima_compra | dias_desde_ultima_compra | percentil_gasto | criterios_cumplidos | segmento          |
++------------+---------------------------+--------------+-------------+---------------------+-----------------+---------------+--------------------------+-----------------+---------------------+-------------------+
+| 1000115838 | Pedro José Ramírez        | Bogotá       |          16 |         38740000.00 |      2421250.00 | 2026-09-17    |                       62 |             100 |                   3 | Premium           |
+| 1000107919 | Ana María Gutiérrez       | Bogotá       |          20 |         32881900.00 |      1644095.00 | 2026-09-22    |                       57 |            96.3 |                   3 | Premium           |
+| 1000163352 | Jorge Enrique Salazar     | Medellín     |          20 |         30408600.00 |      1520430.00 | 2026-10-12    |                       37 |            92.6 |                   3 | Premium           |
+| 1000171271 | Natalia Andrea Duarte     | Medellín     |          11 |         25251700.00 |      2295609.09 | 2026-10-20    |                       29 |            88.9 |                   3 | Premium           |
+| 1000147514 | Felipe Antonio Díaz       | Bogotá       |           7 |         21106900.00 |      3015271.43 | 2026-09-20    |                       59 |            85.2 |                   3 | Premium           |
+| 1000210866 | Hernán David Quintero     | Cali         |          13 |         19155900.00 |      1473530.77 | 2026-08-28    |                       82 |            81.5 |                   3 | Premium           |
+| 1000321732 | Christian Eduardo Peña    | Pereira      |           8 |         16990400.00 |      2123800.00 | 2026-10-03    |                       46 |            77.8 |                   3 | Premium           |
+| 1000123757 | Lucía del Carmen Peña     | Bogotá       |           7 |         15450300.00 |      2207185.71 | 2026-10-24    |                       25 |            74.1 |                   2 | Potencial premium |
+| 1000226704 | Álvaro Javier Pineda      | Cali         |           6 |         14100400.00 |      2350066.67 | 2026-10-13    |                       36 |            70.4 |                   2 | Potencial premium |
+| 1000242542 | Esteban Camilo Lozano     | Barranquilla |           9 |         12960900.00 |      1440100.00 | 2026-06-05    |                      166 |            66.7 |                   2 | Potencial premium |
+| 1000179190 | Óscar Mauricio Pardo      | Medellín     |           7 |          9933200.00 |      1419028.57 | 2026-09-23    |                       56 |            55.6 |                   2 | Potencial premium |
+| 1000202947 | Paola Alexandra Medina    | Medellín     |           3 |          9686900.00 |      3228966.67 | 2026-09-13    |                       66 |            51.9 |                   2 | Potencial premium |
+| 1000282137 | Angélica María Suárez     | Bucaramanga  |           5 |          9208700.00 |      1841740.00 | 2026-09-25    |                       54 |            44.4 |                   2 | Potencial premium |
+| 1000266299 | Claudia Milena Rojas      | Cúcuta       |           6 |          8604400.00 |      1434066.67 | 2026-08-21    |                       89 |            33.3 |                   2 | Potencial premium |
+| 1000305894 | Mauricio Alejandro Gil    | Cartagena    |           6 |          7633400.00 |      1272233.33 | 2026-10-08    |                       41 |            29.6 |                   2 | Potencial premium |
+| 1000290056 | Iván Darío Castaño        | Bucaramanga  |           5 |          6444700.00 |      1288940.00 | 2026-07-09    |                      132 |            25.9 |                   2 | Potencial premium |
+| 1000250461 | Luisa Fernanda Monroy     | Barranquilla |           5 |          5588900.00 |      1117780.00 | 2026-10-31    |                       18 |            22.2 |                   2 | Potencial premium |
+| 1000234623 | Mónica Liliana Cárdenas   | Cali         |           3 |          1636700.00 |       545566.67 | 2026-10-04    |                       45 |             7.4 |                   2 | Potencial premium |
+| 1000131676 | Roberto Carlos Mejía      | Bogotá       |           8 |         12293500.00 |      1536687.50 | 2026-02-14    |                      277 |              63 |                   1 | Regular           |
+| 1000155433 | Carolina Isabel Ríos      | Bogotá       |           2 |         10898200.00 |      5449100.00 | 2026-10-07    |                       42 |            59.3 |                   1 | Regular           |
+| 1000187109 | Camila Fernanda Acosta    | Medellín     |           4 |          9012900.00 |      2253225.00 | 2025-06-26    |                      510 |            40.7 |                   1 | Regular           |
+| 1000195028 | Gustavo Ernesto Niño      | Medellín     |           1 |          8650000.00 |      8650000.00 | 2026-07-07    |                      134 |              37 |                   1 | Regular           |
+| 1000139595 | Sandra Patricia Muñoz     | Bogotá       |           1 |          4051600.00 |      4051600.00 | 2026-09-17    |                       62 |            14.8 |                   1 | Regular           |
+| 1000297975 | Diana Carolina Flórez     | Bucaramanga  |           2 |          1501300.00 |       750650.00 | 2026-06-06    |                      165 |               0 |                   1 | Regular           |
+| 1000313813 | Rosa Elena Navarro        | Cartagena    |           1 |          9405000.00 |      9405000.00 | 2026-04-26    |                      206 |            48.1 |                   0 | Regular           |
+| 1000274218 | Julio César Bermúdez      | Cúcuta       |           2 |          4577900.00 |      2288950.00 | 2026-02-17    |                      274 |            18.5 |                   0 | Regular           |
+| 1000218785 | Tatiana Marcela Vargas    | Cali         |           1 |          3457300.00 |      3457300.00 | 2025-12-26    |                      327 |            11.1 |                   0 | Regular           |
+| 1000329651 | Viviana Lorena Ospina     | Pereira      |           1 |          1579200.00 |      1579200.00 | 2025-12-24    |                      329 |             3.7 |                   0 | Regular           |
++------------+---------------------------+--------------+-------------+---------------------+-----------------+---------------+--------------------------+-----------------+---------------------+-------------------+
