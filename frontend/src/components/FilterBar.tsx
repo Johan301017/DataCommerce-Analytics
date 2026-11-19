@@ -46,6 +46,13 @@ export function FilterBar() {
             {catalogos?.categorias.map((c) => <option key={c.id} value={c.id}>{c.nombre}</option>)}
           </select>
         </label>
+        <label className="w-full sm:w-56">
+          <span className="mb-1 block text-xs text-muted">Producto</span>
+          <select className="input" value={filtros.producto_id} onChange={(e) => setFiltro('producto_id', e.target.value)}>
+            <option value="">Todos los productos</option>
+            {catalogos?.productos?.map((p) => <option key={p.id} value={p.id}>{p.nombre}</option>)}
+          </select>
+        </label>
         <button type="button" onClick={limpiar} disabled={activos === 0}
           className="inline-flex items-center gap-1 rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-ink hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40">
           <X className="h-4 w-4" aria-hidden /> Limpiar filtros

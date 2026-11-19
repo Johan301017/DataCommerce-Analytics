@@ -109,3 +109,16 @@ def test_c10_segmentos_mutuamente_excluyentes_y_reglas():
         assert f["segmento"] == esperado, f
     segmentos = {f["segmento"] for f in filas}
     assert {"Premium", "Potencial premium", "Regular"} <= segmentos
+
+
+def test_c10_corte_historico_excluye_compras_futuras():
+    corte_2025 = [("SET @fecha_corte = %(c)s", {"c": "2025-12-31"})]
+    filas = run_script_query(CONSULTAS[10]["sql"], corte_2025)
+    assert len(filas) > 0
+    assert all(f["ultima_compra"] <= "2025-12-31" for f in filas)
+    assert all(f["dias_desde_ultima_compra"] >= 0 for f in filas)
+
+
+def test_consultas_protegidas_contra_division_entre_cero():
+    for num in (3, 4, 9, 10):
+        assert "NULLIF" in CONSULTAS[num]["sql"]

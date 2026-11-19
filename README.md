@@ -2,7 +2,7 @@
 
 **Business Intelligence & Commercial Performance**
 
-Sistema integral de inteligencia comercial para **DataCommerce Analytics S.A.S.** (actividad académica de Ingeniería de Sistemas basada en `tercer corte.pdf`). Incluye base de datos relacional normalizada en **MySQL 8.0**, conjunto determinista de datos sintéticos colombianos (`658` registros), API REST en **Python + FastAPI**, dashboard ejecutivo interactivo en **React + TypeScript + Vite + Tailwind CSS + Recharts + Leaflet**, suite de `75` pruebas automatizadas (`pytest`), evidencias de ejecución reales y documentación técnica y analítica completa.
+Sistema integral de inteligencia comercial para **DataCommerce Analytics S.A.S.** (actividad académica de Ingeniería de Sistemas basada en `tercer corte.pdf`). Incluye base de datos relacional normalizada en **MySQL 8.0**, conjunto determinista de datos sintéticos colombianos (`658` registros), API REST en **Python + FastAPI**, dashboard ejecutivo interactivo en **React + TypeScript + Vite + Tailwind CSS + Recharts + Leaflet**, suite de `82` pruebas automatizadas (`pytest`), evidencias de ejecución reales y documentación técnica y analítica completa.
 
 ---
 
@@ -27,7 +27,7 @@ flowchart LR
 - **Base de datos:** MySQL 8.0 (`InnoDB`, `utf8mb4`), 7 tablas en 3FN con claves primarias `AUTO_INCREMENT`, `FOREIGN KEY` con `ON DELETE RESTRICT`, `UNIQUE`, `CHECK` e índices analíticos.
 - **Backend:** Python 3.14, FastAPI, Uvicorn, PyMySQL (consultas 100 % parametrizadas), `python-dotenv`, separación por capas (`config`, `database`, `filters`, `repositories`, `services`, `routers`).
 - **Frontend:** React 18, TypeScript, Vite, Tailwind CSS, Recharts, Leaflet + React-Leaflet (OpenStreetMap), Lucide React, formato monetario colombiano (`$ 1.250.000 COP`).
-- **Calidad y pruebas:** Pytest + FastAPI TestClient contra MySQL real (`75` pruebas aprobadas).
+- **Calidad y pruebas:** Pytest + FastAPI TestClient contra MySQL real (`82` pruebas aprobadas).
 
 ---
 
@@ -40,6 +40,9 @@ flowchart LR
 Copy-Item .env.example .env
 # Edite .env y defina DB_PASSWORD con su clave de MySQL
 ```
+
+> **Advertencia sobre `DROP DATABASE`:** El script `database/01_esquema.sql` incluye `DROP DATABASE IF EXISTS datacommerce_analytics;`. Si ya tiene la base creada con información o pruebas propias que desea conservar, **no vuelva a ejecutar `01_esquema.sql`**; utilice únicamente `03_consultas_analiticas.sql` y `04_validaciones.sql`.
+
 Ejecute los scripts en orden en **MySQL Workbench** o consola MySQL:
 1. [database/01_esquema.sql](database/01_esquema.sql)
 2. [database/02_datos.sql](database/02_datos.sql)
@@ -97,14 +100,16 @@ bigdata-datacommerce-analytics/
 │   └── 04_validaciones.sql         # 15 validaciones de integridad y consistencia
 ├── documentacion/
 │   ├── analisis_comercial.md       # 4 preguntas, RFM, 3 estrategias y limitaciones
+│   ├── auditoria_y_entrega.md      # Guía de sustentación y preparación de entrega
 │   ├── conclusiones.md             # Conclusiones técnicas
 │   ├── consultas_explicadas.md     # SQL, explicación y resultados reales
 │   ├── diccionario_datos.md        # Campos, tipos, restricciones y fórmulas
 │   ├── manual_ejecucion.md         # Guía de despliegue y solución de errores
 │   ├── matriz_requisitos.md        # Trazabilidad contra tercer corte.pdf
 │   ├── modelo_relacional.md        # Diseño y diagrama ER en Mermaid
-│   └── normalizacion.md            # 1FN, 2FN, 3FN, dependencias y anomalías
-├── evidencias/                     # Capturas reales y salidas de ejecución
+│   ├── normalizacion.md            # 1FN, 2FN, 3FN, dependencias y anomalías
+│   └── pdf/                        # Versiones PDF de toda la documentación
+├── evidencias/                     # Capturas reales, guía Workbench y salidas UTF-8
 ├── frontend/
 │   ├── src/
 │   │   ├── components/             # FilterBar, KpiCard, SortableTable, UI
@@ -115,9 +120,10 @@ bigdata-datacommerce-analytics/
 │   │   └── utils/                  # Formato COP y fechas
 │   ├── Dockerfile
 │   └── package.json
-├── tests/                          # 75 pruebas contra MySQL real y FastAPI
+├── tests/                          # 82 pruebas contra MySQL real y FastAPI
 ├── .env.example
 ├── .gitignore
+├── AUDITORIA_FINAL.md              # Informe completo de auditoría final
 ├── docker-compose.yml
 └── README.md
 ```

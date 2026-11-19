@@ -31,9 +31,11 @@ export default function Overview() {
             <KpiCard label="Unidades vendidas" value={formatNumber(k.productos_vendidos_unidades)} icon={<Boxes className="h-5 w-5" />} accent="navy" hint="Suma de cantidades" delay={240} />
             <KpiCard label="Crecimiento" value={k.crecimiento_periodo === null ? 'N/D' : formatPercent(k.crecimiento_periodo)}
               icon={<TrendingUp className="h-5 w-5" />} accent="green" trend={k.crecimiento_periodo}
-              hint={k.periodos.actual && k.periodos.anterior
-                ? `${formatDate(k.periodos.actual.inicio)}–${formatDate(k.periodos.actual.fin)} vs ${formatDate(k.periodos.anterior.inicio)}–${formatDate(k.periodos.anterior.fin)}`
-                : 'Sin periodo comparable'} delay={280} />
+              hint={k.periodos.historico_incompleto
+                ? `Histórico previo incompleto (desde ${formatDate(k.periodos.minima_disponible)})`
+                : k.periodos.actual && k.periodos.anterior
+                  ? `${formatDate(k.periodos.actual.inicio)}–${formatDate(k.periodos.actual.fin)} vs ${formatDate(k.periodos.anterior.inicio)}–${formatDate(k.periodos.anterior.fin)}`
+                  : 'Sin periodo comparable'} delay={280} />
           </div>
         )}
       </DataState>

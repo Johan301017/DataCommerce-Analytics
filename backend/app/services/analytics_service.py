@@ -49,7 +49,7 @@ def periodos_comparables(f: Filtros) -> dict[str, Any]:
     """
     rango = repo.rango_fechas()
     if not rango.get("maxima"):
-        return {"actual": None, "anterior": None, "criterio": "sin datos"}
+        return {"actual": None, "anterior": None, "comparable": False, "historico_incompleto": False, "criterio": "sin datos"}
     minima = date.fromisoformat(rango["minima"])
     maxima = date.fromisoformat(rango["maxima"])
     if f.tiene_fechas:
@@ -64,10 +64,14 @@ def periodos_comparables(f: Filtros) -> dict[str, Any]:
         inicio = date(fin.year, 1, 1)
         ant_inicio, ant_fin = _restar_un_anio(inicio), _restar_un_anio(fin)
         criterio = "año corrido vs. mismo periodo del año anterior"
+    comparable = ant_inicio >= minima
     return {
         "actual": {"inicio": inicio.isoformat(), "fin": fin.isoformat()},
         "anterior": {"inicio": ant_inicio.isoformat(), "fin": ant_fin.isoformat()},
-        "criterio": criterio,
+        "comparable": comparable,
+        "historico_incompleto": not comparable,
+        "minima_disponible": minima.isoformat(),
+        "criterio": criterio if comparable else f"{criterio} (histórico previo insuficiente)",
     }
 
 
@@ -80,7 +84,7 @@ def kpis(f: Filtros) -> dict[str, Any]:
     periodos = periodos_comparables(f)
     crecimiento = None
     ingresos_actual = ingresos_anterior = None
-    if periodos["actual"]:
+    if periodos["actual"] and periodos.get("comparable", True):
         pa, pp = periodos["actual"], periodos["anterior"]
         ingresos_actual = repo.totales(f.con_periodo(date.fromisoformat(pa["inicio"]), date.fromisoformat(pa["fin"])))["ingresos"]
         ingresos_anterior = repo.totales(f.con_periodo(date.fromisoformat(pp["inicio"]), date.fromisoformat(pp["fin"])))["ingresos"]
@@ -185,8 +189,11 @@ def premium(f: Filtros, fecha_corte: Optional[date] = None) -> dict[str, Any]:
     total_ing = sum(v["ingresos"] for v in resumen.values())
     for v in resumen.values():
         v["participacion_ingresos"] = _pct(v["ingresos"], total_ing)
+    registrados = repo.total_clientes_registrados()
     return {
         "fecha_corte": corte.isoformat(),
+        "clientes_registrados": registrados,
+        "clientes_con_compras": len(filas),
         "criterios": {
             "frecuencia_minima": 3,
             "recencia_maxima_dias": 180,
@@ -240,7 +247,7 @@ def analisis_ejecutivo(f: Filtros) -> dict[str, Any]:
     # Crecimiento por ciudad en periodos comparables
     per = k["periodos"]
     crec_ciudades: list[dict[str, Any]] = []
-    if per["actual"]:
+    if per["actual"] and per.get("comparable", True):
         act = {r["ciudad"]: r for r in repo.rendimiento_ciudades(
             f.con_periodo(date.fromisoformat(per["actual"]["inicio"]), date.fromisoformat(per["actual"]["fin"])))}
         ant = {r["ciudad"]: r for r in repo.rendimiento_ciudades(

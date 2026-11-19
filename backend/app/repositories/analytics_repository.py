@@ -228,4 +228,5 @@ def catalogos() -> dict[str, list[dict[str, Any]]]:
         "ciudades": fetch_all("SELECT id_ciudad AS id, nombre FROM ciudades ORDER BY nombre"),
         "vendedores": fetch_all("SELECT id_vendedor AS id, nombre FROM vendedores ORDER BY nombre"),
         "categorias": fetch_all("SELECT id_categoria AS id, nombre FROM categorias ORDER BY nombre"),
+        "productos": fetch_all("SELECT id_producto AS id, CONCAT(codigo_sku, ' · ', nombre) AS nombre FROM productos ORDER BY nombre"),
     }

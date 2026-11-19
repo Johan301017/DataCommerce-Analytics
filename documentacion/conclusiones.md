@@ -7,7 +7,7 @@
 
 ## 2. Consistencia analítica entre SQL, API y Dashboard
 - Las nueve consultas obligatorias y la consulta 10 (segmentación RFM) definidas en [03_consultas_analiticas.sql](../database/03_consultas_analiticas.sql) utilizan exactamente las mismas definiciones de ingreso neto, costo, utilidad y transacción distinta (`COUNT(DISTINCT id_venta)`) que el backend en Python/FastAPI.
-- Las `75` pruebas automatizadas con `pytest` contra la instancia real de MySQL `8.0.43` demostraron coincidencia numérica exacta entre la ejecución SQL directa y todos los endpoints REST (`/api/dashboard/*`, `/api/ciudades/*`, `/api/vendedores/*`, `/api/categorias/*`, `/api/productos/*`, `/api/clientes/*`, `/api/analisis/*` y `/api/consultas/*`).
+- Las `82` pruebas automatizadas con `pytest` contra la instancia real de MySQL `8.0.43` demostraron coincidencia numérica exacta entre la ejecución SQL directa y todos los endpoints REST (`/api/dashboard/*`, `/api/ciudades/*`, `/api/vendedores/*`, `/api/categorias/*`, `/api/productos/*`, `/api/clientes/*`, `/api/analisis/*` y `/api/consultas/*`).
 - Todas las validaciones cruzadas confirmaron la ausencia de duplicación por `JOIN`: la suma por ciudad (`$ 351.210.800 COP`), la suma por categoría (`$ 351.210.800 COP`) y el total general coinciden al centavo; la participación por categoría suma `100,00 %`; y el conteo de transacciones coincide con las `180` filas de `ventas`.
 
 ## 3. Arquitectura de software desacoplada y segura

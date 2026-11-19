@@ -57,7 +57,7 @@ FROM vendedores ve
 INNER JOIN ventas v          ON v.id_vendedor = ve.id_vendedor
 INNER JOIN detalle_ventas dv ON dv.id_venta = v.id_venta
 GROUP BY ve.id_vendedor, ve.nombre
-ORDER BY ingresos_generados DESC
+ORDER BY ingresos_generados DESC, num_ventas DESC, ve.id_vendedor ASC
 LIMIT 3;
 
 -- @consulta:3
@@ -210,7 +210,7 @@ SELECT
 FROM ventas v
 INNER JOIN detalle_ventas dv ON dv.id_venta = v.id_venta
 GROUP BY YEAR(v.fecha_venta), MONTH(v.fecha_venta)
-ORDER BY ingresos DESC
+ORDER BY ingresos DESC, anio DESC, mes DESC
 LIMIT 1;
 
 -- @consulta:9
@@ -287,7 +287,7 @@ SELECT
     ci.nombre                                                        AS ciudad,
     pu.frecuencia                                                    AS num_compras,
     pu.monetario                                                     AS ingresos_acumulados,
-    ROUND(pu.monetario / pu.frecuencia, 2)                           AS ticket_promedio,
+    ROUND(pu.monetario / NULLIF(pu.frecuencia, 0), 2)                AS ticket_promedio,
     pu.ultima_compra                                                 AS ultima_compra,
     pu.recencia_dias                                                 AS dias_desde_ultima_compra,
     ROUND(pu.percentil_gasto * 100, 1)                               AS percentil_gasto,

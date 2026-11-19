@@ -5,8 +5,14 @@
 -- Autor: Equipo de Business Intelligence & Data Analytics
 -- Fecha: 2026-11-18
 -- ============================================================================
+-- ADVERTENCIA IMPORTANTE:
+-- Este script ejecuta DROP DATABASE IF EXISTS datacommerce_analytics.
+-- Si ya existe una base de datos activa con datos propios o modificados,
+-- su ejecución ELIMINARÁ TODAS LAS TABLAS Y REGISTROS existentes.
+-- Úselo únicamente para instalación inicial o reinicio completo del entorno.
+-- ============================================================================
 
--- Crear la base de datos
+-- Crear la base de datos (ADVERTENCIA: elimina la base si ya existe)
 DROP DATABASE IF EXISTS datacommerce_analytics;
 CREATE DATABASE datacommerce_analytics
     CHARACTER SET utf8mb4

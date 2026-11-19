@@ -4,6 +4,7 @@ export interface Filtros {
   ciudad_id: string;
   vendedor_id: string;
   categoria_id: string;
+  producto_id: string;
 }
 
 export interface Periodo { inicio: string; fin: string }
@@ -20,7 +21,14 @@ export interface Kpis {
   crecimiento_periodo: number | null;
   ingresos_periodo_actual: number | null;
   ingresos_periodo_anterior: number | null;
-  periodos: { actual: Periodo | null; anterior: Periodo | null; criterio: string };
+  periodos: {
+    actual: Periodo | null;
+    anterior: Periodo | null;
+    comparable?: boolean;
+    historico_incompleto?: boolean;
+    minima_disponible?: string;
+    criterio: string;
+  };
 }
 
 export interface VentaMensual {
@@ -72,6 +80,8 @@ export interface ResumenSegmento {
 
 export interface PremiumResponse {
   fecha_corte: string;
+  clientes_registrados?: number;
+  clientes_con_compras?: number;
   criterios: { frecuencia_minima: number; recencia_maxima_dias: number; percentil_monetario_minimo: number; regla: string };
   resumen: ResumenSegmento[];
   clientes: ClienteRfm[];
@@ -116,6 +126,7 @@ export interface Catalogos {
   ciudades: OpcionCatalogo[];
   vendedores: OpcionCatalogo[];
   categorias: OpcionCatalogo[];
+  productos: OpcionCatalogo[];
   rango_fechas: { minima: string | null; maxima: string | null };
 }
 

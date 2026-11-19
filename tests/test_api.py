@@ -170,3 +170,49 @@ def test_analisis_ejecutivo_coherente(client):
     assert len(a["riesgos"]) == 6 and all(isinstance(r["detectado"], bool) for r in a["riesgos"])
     assert all(h["tipo"] == "observado" for h in a["hallazgos"])
     assert all(r.startswith("Interpretación") for r in a["recomendaciones"])
+
+
+def test_filtro_por_producto(client):
+    k = client.get("/api/dashboard/kpis", params={"producto_id": 1}).json()
+    sql = fetch_one(
+        "SELECT SUM(d.cantidad*(d.precio_unitario-d.descuento_unitario)) t, "
+        "COUNT(DISTINCT v.id_venta) n, SUM(d.cantidad) u "
+        "FROM ventas v JOIN detalle_ventas d ON d.id_venta=v.id_venta WHERE d.id_producto=1"
+    )
+    assert abs(k["ingresos_totales"] - sql["t"]) < 0.01
+    assert k["total_transacciones"] == sql["n"]
+    assert k["productos_vendidos_unidades"] == sql["u"]
+    prods = client.get("/api/productos/ranking", params={"producto_id": 1}).json()
+    assert [p["id_producto"] for p in prods] == [1]
+
+
+def test_catalogos_incluye_productos(client):
+    cat = client.get("/api/catalogos/filtros").json()
+    assert len(cat["productos"]) == 30
+
+
+def test_periodo_historico_incompleto_no_reporta_crecimiento(client):
+    k = client.get("/api/dashboard/kpis", params={"fecha_inicio": "2025-02-01", "fecha_fin": "2025-03-31"}).json()
+    assert k["periodos"]["comparable"] is False
+    assert k["periodos"]["historico_incompleto"] is True
+    assert k["crecimiento_periodo"] is None
+    a = client.get("/api/analisis/ejecutivo", params={"fecha_inicio": "2025-02-01", "fecha_fin": "2025-03-31"}).json()
+    assert a["ciudad_mayor_crecimiento"] is None
+
+
+def test_premium_fecha_corte_historica_y_cobertura_clientes(client):
+    base = client.get("/api/clientes/premium").json()
+    assert base["clientes_registrados"] == 30
+    assert base["clientes_con_compras"] == 28
+    hist = client.get("/api/clientes/premium", params={"fecha_corte": "2025-12-31"}).json()
+    assert hist["fecha_corte"] == "2025-12-31"
+    assert all(c["ultima_compra"] <= "2025-12-31" for c in hist["clientes"])
+    assert sum(c["ingresos"] for c in hist["clientes"]) < sum(c["ingresos"] for c in base["clientes"])
+
+
+def test_premium_cliente_unico_no_falla_percent_rank(client):
+    # Vendedor 9 en un filtro con pocos clientes no produce errores en PERCENT_RANK ni división por cero
+    r = client.get("/api/clientes/premium", params={"ciudad_id": 5, "fecha_inicio": "2025-01-01", "fecha_fin": "2025-06-30"})
+    assert r.status_code == 200
+    body = r.json()
+    assert isinstance(body["clientes"], list)

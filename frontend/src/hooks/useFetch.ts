@@ -34,8 +34,18 @@ export function useFetch<T>(loader: (signal: AbortSignal) => Promise<T>, deps: D
   return { data, loading, error, retry: () => setIntento((i) => i + 1) };
 }
 
+/** Valida en cliente si el rango de fechas está invertido para evitar peticiones HTTP 422 innecesarias. */
+export function fechasInvalidas(f: Filtros): boolean {
+  return Boolean(f.fecha_inicio && f.fecha_fin && f.fecha_inicio > f.fecha_fin);
+}
+
 /** Atajo: petición que depende de los filtros globales. */
 export function useFilteredFetch<T>(loader: (f: Filtros, signal: AbortSignal) => Promise<T>): FetchState<T> {
   const { filtros } = useFilters();
-  return useFetch((signal) => loader(filtros, signal), [filtros]);
+  return useFetch((signal) => {
+    if (fechasInvalidas(filtros)) {
+      return Promise.reject(new Error('La fecha inicial no puede ser posterior a la fecha final.'));
+    }
+    return loader(filtros, signal);
+  }, [filtros]);
 }

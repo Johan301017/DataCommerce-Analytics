@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Bar, BarChart, CartesianGrid, Cell, Legend, Pie, PieChart, ResponsiveContainer, Scatter, ScatterChart, Tooltip, XAxis, YAxis, ZAxis } from 'recharts';
-import { Check, Crown, Repeat, Sparkles, Users, X } from 'lucide-react';
+import { Check, Crown, Repeat, RotateCcw, Sparkles, Users, X } from 'lucide-react';
 import { Card, DataState, PageHeader } from '../components/ui';
 import { SortableTable, type Column } from '../components/SortableTable';
 import { ChartTooltip } from '../components/ChartTooltip';
-import { useFilteredFetch } from '../hooks/useFetch';
+import { useFilters } from '../context/FiltersContext';
+import { fechasInvalidas, useFetch, useFilteredFetch } from '../hooks/useFetch';
 import { api } from '../services/api';
 import type { ClienteRecurrente, ClienteRfm, Segmento } from '../types';
 import { formatCOP, formatCOPCompact, formatDate, formatNumber, formatPercent } from '../utils/format';
@@ -43,8 +44,17 @@ const COL_REC: Column<ClienteRecurrente>[] = [
   { key: 'ultima_compra', label: 'Última', className: 'whitespace-nowrap', render: (r) => formatDate(r.ultima_compra) },
 ];
 
+const CORTE_ACADEMICO = '2026-11-18';
+
 export default function Clients() {
-  const premium = useFilteredFetch(api.premium);
+  const { filtros } = useFilters();
+  const [fechaCorte, setFechaCorte] = useState(CORTE_ACADEMICO);
+  const premium = useFetch((s) => {
+    if (fechasInvalidas(filtros)) {
+      return Promise.reject(new Error('La fecha inicial no puede ser posterior a la fecha final.'));
+    }
+    return api.premium(filtros, s, fechaCorte);
+  }, [filtros, fechaCorte]);
   const recurrentes = useFilteredFetch(api.recurrentes);
   const [segmento, setSegmento] = useState<'' | Segmento>('');
 
@@ -70,12 +80,33 @@ export default function Clients() {
               ))}
             </div>
             <div className="mt-4 rounded-lg border border-primary/20 bg-primary-light/40 p-4 text-sm text-ink">
-              <p className="font-semibold">Criterios de segmentación (fecha de corte {formatDate(p.fecha_corte)})</p>
-              <ul className="mt-1 list-disc space-y-0.5 pl-5 text-muted">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <p className="font-semibold">Criterios de segmentación (fecha de corte {formatDate(p.fecha_corte)})</p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <label className="flex items-center gap-2 text-xs font-medium text-muted">
+                    Fecha de corte RFM:
+                    <input type="date" className="input w-40 py-1 text-xs" value={fechaCorte}
+                      onChange={(e) => setFechaCorte(e.target.value || CORTE_ACADEMICO)} aria-label="Fecha de corte RFM" />
+                  </label>
+                  {fechaCorte !== CORTE_ACADEMICO && (
+                    <button type="button" onClick={() => setFechaCorte(CORTE_ACADEMICO)}
+                      className="inline-flex items-center gap-1 rounded-md border border-primary/30 bg-white px-2.5 py-1 text-xs font-medium text-primary hover:bg-primary-light/40">
+                      <RotateCcw className="h-3 w-3" aria-hidden /> Corte académico
+                    </button>
+                  )}
+                </div>
+              </div>
+              <ul className="mt-2 list-disc space-y-0.5 pl-5 text-muted">
                 <li><b>Frecuencia:</b> al menos {p.criterios.frecuencia_minima} compras (facturas distintas).</li>
                 <li><b>Recencia:</b> última compra dentro de los {p.criterios.recencia_maxima_dias} días anteriores al corte.</li>
                 <li><b>Valor monetario:</b> gasto acumulado en el 25 % superior (PERCENT_RANK ≥ 0,75).</li>
                 <li>{p.criterios.regla}.</li>
+                {p.clientes_registrados !== undefined && (
+                  <li>
+                    <b>Cobertura:</b> {p.clientes.length} clientes con compras dentro de {p.clientes_registrados} clientes registrados
+                    ({Math.max(0, p.clientes_registrados - p.clientes.length)} sin compras en el periodo/corte).
+                  </li>
+                )}
               </ul>
             </div>
           </>

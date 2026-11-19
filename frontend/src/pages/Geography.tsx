@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { CircleMarker, MapContainer, Popup, TileLayer, Tooltip as LTooltip } from 'react-leaflet';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { MapPinned } from 'lucide-react';
+import { MapPinned, WifiOff } from 'lucide-react';
 import { Card, DataState, PageHeader } from '../components/ui';
 import { SortableTable, type Column } from '../components/SortableTable';
 import { useFilteredFetch } from '../hooks/useFetch';
@@ -27,6 +28,7 @@ function radio(ingresos: number, max: number): number {
 
 export default function Geography() {
   const ciudades = useFilteredFetch(api.ciudades);
+  const [tileError, setTileError] = useState(false);
 
   return (
     <>
@@ -39,10 +41,17 @@ export default function Geography() {
             {(d) => {
               const max = Math.max(...d.map((c) => c.ingresos), 0);
               return (
-                <div className="h-[480px] overflow-hidden rounded-b-xl">
-                  <MapContainer center={[6.3, -74.6]} zoom={6} scrollWheelZoom className="h-full w-full" aria-label="Mapa de ciudades">
+                <div className="relative h-[480px] overflow-hidden rounded-b-xl bg-slate-200">
+                  {tileError && (
+                    <div role="status" className="absolute left-14 right-3 top-3 z-[500] flex items-center gap-2 rounded-lg border border-amber-300 bg-amber-50/95 px-3 py-2 text-xs text-amber-900 shadow">
+                      <WifiOff className="h-4 w-4 shrink-0 text-amber-600" aria-hidden />
+                      <span>Sin conexión con OpenStreetMap: no se cargaron los mosaicos de fondo, pero los marcadores y métricas desde MySQL siguen operativos.</span>
+                    </div>
+                  )}
+                  <MapContainer center={[6.3, -74.6]} zoom={6} scrollWheelZoom className="h-full w-full !bg-slate-200" aria-label="Mapa de ciudades">
                     <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      eventHandlers={{ tileerror: () => setTileError(true), tileload: () => setTileError(false) }} />
                     {d.map((c) => (
                       <CircleMarker key={c.id_ciudad} center={[c.latitud, c.longitud]} radius={radio(c.ingresos, max)}
                         pathOptions={{ color: '#1D4ED8', weight: 2, fillColor: c.posicion === 1 ? '#10B981' : '#2563EB', fillOpacity: 0.55 }}>

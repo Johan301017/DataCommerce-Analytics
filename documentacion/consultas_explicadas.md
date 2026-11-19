@@ -84,7 +84,7 @@ FROM vendedores ve
 INNER JOIN ventas v          ON v.id_vendedor = ve.id_vendedor
 INNER JOIN detalle_ventas dv ON dv.id_venta = v.id_venta
 GROUP BY ve.id_vendedor, ve.nombre
-ORDER BY ingresos_generados DESC
+ORDER BY ingresos_generados DESC, num_ventas DESC, ve.id_vendedor ASC
 LIMIT 3;
 ```
 
@@ -376,7 +376,7 @@ SELECT
 FROM ventas v
 INNER JOIN detalle_ventas dv ON dv.id_venta = v.id_venta
 GROUP BY YEAR(v.fecha_venta), MONTH(v.fecha_venta)
-ORDER BY ingresos DESC
+ORDER BY ingresos DESC, anio DESC, mes DESC
 LIMIT 1;
 ```
 
@@ -481,7 +481,7 @@ SELECT
     ci.nombre                                                        AS ciudad,
     pu.frecuencia                                                    AS num_compras,
     pu.monetario                                                     AS ingresos_acumulados,
-    ROUND(pu.monetario / pu.frecuencia, 2)                           AS ticket_promedio,
+    ROUND(pu.monetario / NULLIF(pu.frecuencia, 0), 2)                AS ticket_promedio,
     pu.ultima_compra,
     pu.recencia_dias                                                 AS dias_desde_ultima_compra,
     ROUND(pu.percentil_gasto * 100, 1)                               AS percentil_gasto,
@@ -506,7 +506,13 @@ ORDER BY pu.criterios_cumplidos DESC, pu.monetario DESC;
 | **Regular** | 10 | $ 65.426.900 | 18,63 % | $ 2.844.648 |
 | **Total** | **28** | **$ 351.210.800** | **100,00 %** | **$ 1.951.171** |
 
-*(Nota: los 2 clientes registrados restantes —`Fabián Andrés Ortega` y `Miguel Ángel Restrepo`— no registran facturas emitidas en el periodo).*
+*(Nota: los 2 clientes registrados restantes —`Fabián Andrés Ortega` y `Miguel Ángel Restrepo`— no registran facturas emitidas en el periodo, por lo que no ingresan al cálculo RFM sobre `ventas`; en el módulo web `Clientes` se informa explícitamente la cobertura frente al total de `30` clientes registrados).*
+
+### Limitaciones del modelo RFM y comportamiento en casos límite
+1. **Clientes sin compras:** Como la CTE parte de `ventas`, los clientes registrados sin transacciones (`2` de `30`) quedan excluidos del ranking porcentual para no distorsionar `PERCENT_RANK`.
+2. **Conjuntos pequeños y empates:** Con un solo comprador filtrado (`n = 1`), `PERCENT_RANK()` devuelve `0,0` por definición del estándar SQL, por lo que ningún cliente alcanza el cuartil `≥ 0,75`; si existen empates exactos en `monetario`, ambos reciben el mismo `PERCENT_RANK`.
+3. **Ausencia de rentabilidad individual:** La métrica monetaria (`M`) pondera ingresos netos y no utilidad neta por cliente, por lo que un cliente que compre exclusivamente artículos de bajo margen puede ubicarse en `Premium`.
+4. **Sensibilidad a la fecha de corte:** Al cambiar `@fecha_corte` (disponible en el endpoint y en la vista `Clientes`), se recalculan tanto `recencia_dias` como la ventana de transacciones válidas (`fecha_venta <= @fecha_corte`), conservando intactos los resultados del corte académico `2026-11-18`.
 
 #### Detalle de los 7 clientes **Premium**
 | Documento | Cliente | Ciudad | Compras | Ingresos (COP) | Ticket prom. (COP) | Última compra | Días | Percentil |

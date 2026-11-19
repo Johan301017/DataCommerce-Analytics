@@ -7,9 +7,9 @@ Guía paso a paso para instalar, configurar, ejecutar y verificar el sistema com
 ## 1. Requisitos del entorno
 
 ### Para ejecución local en Windows (sin Docker)
-- **MySQL Server 8.0** y **MySQL Workbench 8.0** (u otro cliente MySQL).
-- **Python 3.10+** (verificado en `3.14.0`).
-- **Node.js 18+** y **npm 9+** (verificado en Node `v24.11.1` / npm `11.6.2`).
+- **MySQL Server 8.0** y **MySQL Workbench 8.0** (base de datos relacional).
+- **Python 3.10+** (verificado en `3.14.0`, para el **backend FastAPI** y pruebas `pytest`).
+- **Node.js 18+** y **npm 9+** (verificado en Node `v24.11.1` / npm `11.6.2`, exclusivamente para el **frontend React + Vite**).
 - Navegador web moderno (Chrome, Edge o Firefox).
 
 ### Alternativa con Docker
@@ -39,6 +39,8 @@ Guía paso a paso para instalar, configurar, ejecutar y verificar el sistema com
 ---
 
 ## 3. Configuración y carga de MySQL 8.0
+
+> **Advertencia sobre `DROP DATABASE`:** El archivo [database/01_esquema.sql](../database/01_esquema.sql) ejecuta `DROP DATABASE IF EXISTS datacommerce_analytics;`. Si la base de datos ya está cargada y en funcionamiento, **no vuelva a ejecutar `01_esquema.sql`** salvo que desee reiniciar todos los datos desde cero.
 
 ### Opción A: Desde MySQL Workbench
 1. Asegúrese de que el servicio **MySQL80** esté en ejecución (`Services.msc` o `Get-Service MySQL80`). *(Si tiene XAMPP instalado, no inicie el MySQL de XAMPP porque usa el mismo puerto 3306).*
@@ -112,7 +114,7 @@ Con la base de datos cargada y `.env` configurado, ejecute desde la raíz del pr
 .\backend\.venv\Scripts\python.exe -m pytest tests -v
 ```
 
-Las `75` pruebas verifican el esquema, restricciones `PK/FK/UNIQUE/NOT NULL/CHECK/RESTRICT`, las 10 consultas SQL, la coincidencia exacta entre API y SQL, los filtros dinámicos y los periodos sin ventas.
+Las `82` pruebas verifican el esquema, restricciones `PK/FK/UNIQUE/NOT NULL/CHECK/RESTRICT`, las 10 consultas SQL, la coincidencia exacta entre API y SQL, el filtro por producto, fechas de corte RFM históricas, históricos incompletos y periodos sin ventas.
 
 ---
 

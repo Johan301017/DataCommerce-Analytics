@@ -156,6 +156,8 @@ Los **7 clientes Premium** (ubicados principalmente en Bogotá y Medellín, adem
 
 ## 7. Tres estrategias de negocio basadas en datos
 
+> **Nota metodológica:** Las siguientes tres estrategias constituyen **propuestas académicas de simulación comercial**, formuladas estrictamente sobre los datos sintéticos generados para DataCommerce Analytics S.A.S. No corresponden a resultados de una empresa real en operación ni garantizan su desempeño sin validación previa de costos logísticos, inventario y mercado externo.
+
 ### Estrategia 1: Programa de conversión "Potencial → Premium" y mezcla hacia *Salud y Bienestar* (Venta cruzada dirigida)
 - **Hallazgo que la justifica:** `Salud y Bienestar` genera el margen más alto (`48,34 %`) y el mayor crecimiento interanual (`+176,59 %`), pero participa solo con `9,18 %` de las ventas. Simultáneamente, existen `11` clientes **Potencial premium** que compran con frecuencia (`3` a `9` veces) y recencia vigente (`18` a `166` días), pero cuyo ticket promedio (`$ 1.633.040 COP`) es inferior al del grupo Premium (`$ 1.942.478 COP`).
 - **Objetivo:** Elevar la participación de *Salud y Bienestar* en la facturación total y migrar al menos a 4 clientes de *Potencial premium* hacia el segmento *Premium* durante los próximos 6 meses.
@@ -182,7 +184,7 @@ Los **7 clientes Premium** (ubicados principalmente en Bogotá y Medellín, adem
 - **Objetivo:** Mejorar la rentabilidad unitaria de la línea tecnológica y reducir la dependencia del Top 3 de vendedores elevando el ticket promedio del grupo medio/bajo.
 - **Acciones concretas:**
   1. Limitar los descuentos discrecionales en `TEC-001` (que hoy promedian un precio efectivo de `$ 3.043.896 COP` frente a un precio de lista de `$ 3.200.000 COP`) y vincular su venta obligatoriamente con accesorios complementarios de mayor margen (`TEC-004` Mouse con `31,81 %` de margen, `HOG-002` Silla con `38,26 %` o `TEC-006` Audífonos con `25,79 %`).
-  2. Estandarizar el guion comercial de `María Fernanda López` (ticket `$ 2,85 M COP`) y `Diego Alejandro Morales` (ticket `$ 2,96 M COP`) para capacitar en venta consultiva multiproduto a los vendedores de Barranquilla, Bucaramanga y Medellín-2 (`Camila Andrea Vargas`).
+  2. Estandarizar el guion comercial de `María Fernanda López` (ticket `$ 2,85 M COP`) y `Diego Alejandro Morales` (ticket `$ 2,96 M COP`) para capacitar en venta consultiva multiproducto a los vendedores de Barranquilla, Bucaramanga y Medellín-2 (`Camila Andrea Vargas`).
 - **Indicador KPI:** Margen porcentual de la categoría `Tecnología`, porcentaje de ventas de `TEC-001` con más de un ítem en la factura y participación conjunta del Top 3 de vendedores.
 - **Meta sugerida y justificación:** Elevar el margen de `Tecnología` del **`17,10 %` al `21,0 %`** (aportando más de `$ 5 M COP` adicionales de utilidad a igual volumen) y reducir la concentración del Top 3 de vendedores del **`60,72 %` a menos del `53,0 %`** en 6 meses.
 - **Riesgos y limitaciones:** La elasticidad de la demanda en laptops ante menor descuento puede frenar unidades vendidas si existen competidores con menor precio; adicionalmente, la base no registra la estructura de comisiones para validar si los descuentos actuales responden a incentivos por volumen bruto en lugar de utilidad.

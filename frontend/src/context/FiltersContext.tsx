@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { api } from '../services/api';
 import type { Catalogos, Filtros } from '../types';
 
-export const FILTROS_VACIOS: Filtros = { fecha_inicio: '', fecha_fin: '', ciudad_id: '', vendedor_id: '', categoria_id: '' };
+export const FILTROS_VACIOS: Filtros = { fecha_inicio: '', fecha_fin: '', ciudad_id: '', vendedor_id: '', categoria_id: '', producto_id: '' };
 
 interface FiltersContextValue {
   filtros: Filtros;

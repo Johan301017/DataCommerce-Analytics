@@ -15,6 +15,7 @@ class Filtros:
     ciudad_id: Optional[int] = None
     vendedor_id: Optional[int] = None
     categoria_id: Optional[int] = None
+    producto_id: Optional[int] = None
 
     @property
     def tiene_fechas(self) -> bool:
@@ -43,6 +44,9 @@ class Filtros:
         if self.categoria_id is not None:
             condiciones.append("p.id_categoria = %(categoria_id)s")
             params["categoria_id"] = self.categoria_id
+        if self.producto_id is not None:
+            condiciones.append("dv.id_producto = %(producto_id)s")
+            params["producto_id"] = self.producto_id
         clausula = ("WHERE " + " AND ".join(condiciones)) if condiciones else ""
         return clausula, params
 
@@ -53,7 +57,8 @@ def obtener_filtros(
     ciudad_id: Optional[int] = Query(None, ge=1, description="Ciudad donde ocurrió la venta"),
     vendedor_id: Optional[int] = Query(None, ge=1),
     categoria_id: Optional[int] = Query(None, ge=1),
+    producto_id: Optional[int] = Query(None, ge=1),
 ) -> Filtros:
     if fecha_inicio and fecha_fin and fecha_inicio > fecha_fin:
         raise HTTPException(status_code=422, detail="fecha_inicio no puede ser posterior a fecha_fin")
-    return Filtros(fecha_inicio, fecha_fin, ciudad_id, vendedor_id, categoria_id)
+    return Filtros(fecha_inicio, fecha_fin, ciudad_id, vendedor_id, categoria_id, producto_id)
